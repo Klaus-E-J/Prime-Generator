@@ -1,39 +1,45 @@
-#include <iostream>
 #include <fstream>
+#include <iostream>
 #include <vector>
 
 typedef int64_t Number;
 
 using namespace std;
 
-void ReadPrimesFromBinaryFile(const string& filename) {
-    ifstream inFile(filename, ios::binary);
-    if (!inFile) {
-        cerr << "Error opening file for reading!" << endl;
-        return;
-    }
+void ReadPrimesFromBinaryFile(const string &filename) {
+  ifstream inFile(filename, ios::binary);
+  if (!inFile) {
+    cerr << "Error opening file for reading!" << endl;
+    return;
+  }
 
-    vector<Number> primes;
-    Number prime;
+  vector<Number> primes;
+  Number prime;
 
-    // Read primes one by one until we reach the end of the file
-    while (inFile.read(reinterpret_cast<char*>(&prime), sizeof(prime))) {
-        primes.push_back(prime);  // Store the prime
-    }
+  // Read primes one by one until we reach the end of the file
+  while (inFile.read(reinterpret_cast<char *>(&prime), sizeof(prime))) {
+    primes.push_back(prime); // Store the prime
+  }
 
-    inFile.close();
+  inFile.close();
 
-    for (size_t i = 0; i < primes.size(); ++i) {
-        cout << primes[i] << " ";
-    }
-    cout << endl;
+  for (size_t i = 0; i < primes.size(); ++i) {
+    cout << primes[i] << " ";
+  }
+  cout << endl;
 }
 
-int main() {
-    string filename = "";  // The file where primes were saved
+int main(int argc, char **argv) {
+  string filename = ""; // The file where primes were saved
+
+  if (argc > 1)
+    filename = argv[argc - 1];
+
+  if (filename == "") {
     std::cout << "Insert the name of the .bin file you want to open: ";
     std::cin >> filename;
-    ReadPrimesFromBinaryFile(filename);
+  }
+  ReadPrimesFromBinaryFile(filename);
 
-    return 0;
+  return 0;
 }
