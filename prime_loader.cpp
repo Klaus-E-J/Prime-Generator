@@ -29,10 +29,15 @@ void ReadPrimesFromBinaryFile(const string& filename) {
     cout << endl;
 }
 
-int main() {
+int main(int argc,char** argv) {
     string filename = "";  // The file where primes were saved
-    std::cout << "Insert the name of the .bin file you want to open: ";
-    std::cin >> filename;
+    
+    if (argc>1){
+        filename=argv[argc-1];
+    }else {
+        std::cout << "Insert the name of the .bin file you want to open: ";
+        std::cin >> filename;
+    }
     ReadPrimesFromBinaryFile(filename);
 
     return 0;
